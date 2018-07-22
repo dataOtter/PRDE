@@ -43,7 +43,6 @@ $(document).ready(function(){
             dataType: 'html',
             success: function(template) {
                     $("body").empty().append(template);
-                    //$("body").empty().load("../../templates/extractor.html");
                     console.log("success!! ");
 
                     $.post("/send_available_cols", init_cols_selector);
@@ -58,17 +57,6 @@ $(document).ready(function(){
             }
         });
     });
-    /////////////////////////////////////////////////////////////////////////////
-    // extractor jquery
-    /////////////////////////////////////////////////////////////////////////////
-    //$.post("/send_available_cols", init_cols_selector);
-
-    //$('.flex-container').on('click', "#generate_download_button", make_zip_download);
-
-    //$('.flex-container').on('click', ".cols-button", add_rem_all_cols);
-
-    //$('.flex-container').on('click', ".list-group-item", add_rem_one_col);
-
 
     /////////////////////////////////////////////////////////////////////////////
     // faceted search functions

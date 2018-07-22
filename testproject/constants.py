@@ -6,6 +6,7 @@ HOST_IP = '192.168.1.10'
 GLOBAL_CNX_COUNT = -1
 GLOBAL_CNX = None
 
+
 def concat_path(filename):
     return ALL_CSVS_PATH + filename + '.csv'
 
@@ -13,8 +14,13 @@ ALL_CSVS_PATH = "D:\\Dropbox\\MB_dev\\Puerto Rico\\csv_data\\"
 CREATE_DB_SQL_FILE_PATH = \
     "D:\\Dropbox\\MB_dev\\Puerto Rico\\puerto_rico\\SQL\\python_readable_create_sql_db.sql"
 
-#DOWNLOAD_FILES_PATH = "D:\\Dropbox\\MB_dev\\PRDE\\testproject\\outputs\\"
-DOWNLOAD_FILES_PATH = "/home/user/PRDE/testproject/outputs/"
+DOWNLOAD_FILES_PATH = "D:\\Dropbox\\MB_dev\\PRDE\\testproject\\outputs\\"
+#DOWNLOAD_FILES_PATH = "/home/user/PRDE/testproject/outputs/"
+
+DOWNLOAD_FILE_NAME_NODES = 'nodes_data.csv'
+DOWNLOAD_FILE_NAME_EDGES = 'edges_data.csv'
+DOWNLOAD_FILE_NAMES_LIST = [DOWNLOAD_FILE_NAME_EDGES, DOWNLOAD_FILE_NAME_NODES]
+DOWNLOAD_ZIP_FOLDER_NAME = 'puerto_rico_data.zip'
 
 CSV_NULL_VALUES = '#NULL!'
 
