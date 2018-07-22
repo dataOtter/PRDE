@@ -14,7 +14,7 @@ def get_new_guid_for_fs():
     print ("SESSION_MAP: Guid made: " + guid)
 
     f.g.foo = 'abc'
-    print('g.foo should be abc, is: {0}'.format(f.g.foo))
+    print('111 g.foo should be abc, is: {0}'.format(f.g.foo))
 
     return guid
 
@@ -28,7 +28,7 @@ def get_FilterSystem(guid):
         return
 
     f.g.foo = 'abc'
-    print('g.foo should be abc, is: {0}'.format(f.g.foo))
+    print('222 g.foo should be abc, is: {0}'.format(f.g.foo))
 
     return answer
 
@@ -42,7 +42,7 @@ def update_FilterSystem(guid, fs):
         return
 
     f.g.foo = 'abc'
-    print('g.foo should be abc, is: {0}'.format(f.g.foo))
+    print('333 g.foo should be abc, is: {0}'.format(f.g.foo))
 
     session_map[guid] = fs
 
