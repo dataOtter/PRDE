@@ -5,17 +5,30 @@ from csv_writer import extractor_SQL_queries as q
 from csv_writer import write_to_csv as csv_zip
 
 import pickle
+import session_map as sm
 
 app = f.Flask(__name__)
 app.secret_key = "It's secret, duh"
 
+PICKLE_FS = False
 
 @app.route("/")
 def main():
     """Returns the initial html page"""
-    fs = pidf.FilterSystem()
+    if (PICKLE_FS):
+        fs = pidf.FilterSystem()
+    else:
+        guid = sm.get_new_guid_for_fs()
+        fs = sm.get_FilterSystem(guid)
     try:
-        f.session['fs'] = pickle.dumps(fs)
+        if (PICKLE_FS):
+            tmp = pickle.dumps(fs)
+            print(" pickled fs")
+            print(tmp)
+            f.session['fs'] = tmp
+        else:
+            f.session['fs'] = guid
+
     except Exception as e:
         print(e)
 
@@ -25,7 +38,12 @@ def main():
 @app.route("/show_init_filters", methods=["POST"])
 def show_init_filters():
     """Returns a json dictionary of all filter options and number of resulting project IDs"""
-    fs = pickle.loads(f.session['fs'])
+    if (PICKLE_FS):
+        fs = pickle.loads(f.session['fs'])
+    else:
+        guid = f.session['fs']
+        fs = sm.get_FilterSystem(guid)
+
     # filter kind to list of each category & number of project IDs
     return f.jsonify({"filter_options_dict": fs.get_add_filter_options_str_dict(),
                       "total_participants": len(fs.get_result_pids())})
@@ -36,7 +54,12 @@ def show_result():
     """Returns a json dictionary of: number of project IDs resulting from the applied filter(s);
     list of all currently active filter kinds; list of all currently active filters as a kind and category string;
     list of all possible filter kinds; json dictionary of all filter options and number of resulting project IDs."""
-    fs = pickle.loads(f.session['fs'])
+    if (PICKLE_FS):
+        fs = pickle.loads(f.session['fs'])
+    else:
+        guid = f.session['fs']
+        fs = sm.get_FilterSystem(guid)
+
     data = f.request.json  # get selected filters options as kind to category/'ALL'/'ASIS' dictionary
     to_apply, to_remove, active_filter_kinds, rem_fltrs = [], [], [], []
     active_fltrs = {}
@@ -63,7 +86,11 @@ def show_result():
     for fltr in rem_fltrs:  # loop through all filters to be removed
         fs.remove_filter(fltr)  # remove each filter
 
-    f.session['fs'] = pickle.dumps(fs)
+    if (PICKLE_FS):
+        f.session['fs'] = pickle.dumps(fs)
+    else:
+        guid = f.session['fs']
+        fs = sm.update_FilterSystem(guid, fs)
 
     for fltr in fs.get_active_filters():
         kind = fltr.get_kind()
@@ -81,7 +108,12 @@ def show_result():
 
 def get_all_fltr_kinds():
     """Returns a list of all possible filter kinds."""
-    fs = pickle.loads(f.session['fs'])
+    if (PICKLE_FS):
+        fs = pickle.loads(f.session['fs'])
+    else:
+        guid = f.session['fs']
+        fs = sm.get_FilterSystem(guid)
+
     all_fltr_kinds = []
     for kind in fs.get_filters_dict():
         all_fltr_kinds.append(kind)
@@ -109,7 +141,12 @@ def send_cols():
 @app.route("/receive_selected_cols", methods=["POST"])
 def receive_cols():
     data = f.request.json
-    fs = pickle.loads(f.session['fs'])
+    if (PICKLE_FS):
+        fs = pickle.loads(f.session['fs'])
+    else:
+        guid = f.session['fs']
+        fs = sm.get_FilterSystem(guid)
+
     pids_list = fs.get_result_pids()
     return f.jsonify({"zip_folder_name": csv_zip.make_zip_folder(data, pids_list)})
 
