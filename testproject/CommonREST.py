@@ -18,8 +18,9 @@ def main():
     if (PICKLE_FS):
         fs = pidf.FilterSystem()
     else:
-        guid = sm.get_new_guid_for_fs()
-        fs = sm.get_FilterSystem(guid)
+        guid = sm.get_new_guid_for_fs(app)
+        fs = sm.get_FilterSystem(guid,app)
+
     try:
         if (PICKLE_FS):
             tmp = pickle.dumps(fs)
@@ -42,7 +43,7 @@ def show_init_filters():
         fs = pickle.loads(f.session['fs'])
     else:
         guid = f.session['fs']
-        fs = sm.get_FilterSystem(guid)
+        fs = sm.get_FilterSystem(guid, app)
 
     # filter kind to list of each category & number of project IDs
     return f.jsonify({"filter_options_dict": fs.get_add_filter_options_str_dict(),
@@ -58,7 +59,7 @@ def show_result():
         fs = pickle.loads(f.session['fs'])
     else:
         guid = f.session['fs']
-        fs = sm.get_FilterSystem(guid)
+        fs = sm.get_FilterSystem(guid, app)
 
     data = f.request.json  # get selected filters options as kind to category/'ALL'/'ASIS' dictionary
     to_apply, to_remove, active_filter_kinds, rem_fltrs = [], [], [], []
@@ -90,7 +91,7 @@ def show_result():
         f.session['fs'] = pickle.dumps(fs)
     else:
         guid = f.session['fs']
-        fs = sm.update_FilterSystem(guid, fs)
+        fs = sm.update_FilterSystem(guid, fs, app)
 
     for fltr in fs.get_active_filters():
         kind = fltr.get_kind()
@@ -112,7 +113,7 @@ def get_all_fltr_kinds():
         fs = pickle.loads(f.session['fs'])
     else:
         guid = f.session['fs']
-        fs = sm.get_FilterSystem(guid)
+        fs = sm.get_FilterSystem(guid, app)
 
     all_fltr_kinds = []
     for kind in fs.get_filters_dict():
@@ -145,7 +146,7 @@ def receive_cols():
         fs = pickle.loads(f.session['fs'])
     else:
         guid = f.session['fs']
-        fs = sm.get_FilterSystem(guid)
+        fs = sm.get_FilterSystem(guid, app)
 
     pids_list = fs.get_result_pids()
     return f.jsonify({"zip_folder_name": csv_zip.make_zip_folder(data, pids_list)})

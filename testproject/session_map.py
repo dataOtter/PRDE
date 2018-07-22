@@ -3,46 +3,46 @@ import uuid
 from faceted_search import faceted_search_filter_instances as pidf
 
 # global variable: map from guid to FilterSystem
-session_map = {}
 
-
-def get_new_guid_for_fs():
+def get_new_guid_for_fs(app):
     """return a guid which maps to a FilterSystem"""
     fs = pidf.FilterSystem()
     guid = str(uuid.uuid1())
-    session_map[guid] = fs
-    print ("SESSION_MAP: Guid made: " + guid)
 
-    f.g.foo = 'abc'
-    print('111 g.foo should be abc, is: {0}'.format(f.g.foo))
+    if not hasattr(app.config, 'session_map'):
+        print('SESSION_MAP: session_map made')
+        app.config.session_map = {}
+
+    app.config.session_map[guid] = fs
+    print ("SESSION_MAP: Guid made: " + guid)
 
     return guid
 
 
-def get_FilterSystem(guid):
+def get_FilterSystem(guid,app):
     """return a FilterSystem corresponding to a guid"""
-    if guid in session_map.keys():
-        answer = session_map[guid]
+
+    if not hasattr(app.config, 'session_map'):
+        print('SESSION_MAP: session_map lost')
+
+    if guid in app.config.session_map.keys():
+        answer = app.config.session_map[guid]
     else:
         print ("SESSION_MAP: Guid lost: " + guid)
         return
-
-    f.g.foo = 'abc'
-    print('222 g.foo should be abc, is: {0}'.format(f.g.foo))
 
     return answer
 
 
-def update_FilterSystem(guid, fs):
+def update_FilterSystem(guid, fs, app):
     """Update the fs associated with a guid"""
-    if guid in session_map.keys():
-        answer = session_map[guid]
-    else:
+
+    if not hasattr(app.config, 'session_map'):
+        print('SESSION_MAP: session_map lost')
+
+    if guid not in app.config.session_map.keys():
         print ("SESSION_MAP: Guid lost: " + guid)
         return
 
-    f.g.foo = 'abc'
-    print('333 g.foo should be abc, is: {0}'.format(f.g.foo))
-
-    session_map[guid] = fs
+    app.config.session_map[guid] = fs
 
