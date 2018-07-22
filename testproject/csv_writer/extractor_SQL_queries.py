@@ -40,7 +40,6 @@ def get_single_subjects_tbl_of_all_given_tbls_and_cols(phase_tbl_cols_dict: dict
                 from_statement += add_left_join_to_from_statement(tbl, c.LABEL_UNIQUE_ID, c.SUBJECTS_IDS_FILE)
 
     where_statement = "WHERE " + c.SUBJECTS_IDS_FILE + "." + c.LABEL_PID + " IN ('" + "', '".join(pids_list) + "')"
-    print((select_statement + " " + from_statement + " " + where_statement))
 
     data = q.execute_query_return_raw(select_statement + " " + from_statement + " " + where_statement)
     full_data = make_tbl_data_list_of_lists(data, final_cols_list)
@@ -71,7 +70,7 @@ def get_single_edges_tbl_of_all_given_tbls_and_cols(phase_tbl_cols_dict: dict, e
                     select_statement += add_cols_to_select_statement(tbl, cols, final_cols_list, exclude_cols_list)
                 from_statement += add_left_join_to_from_statement(tbl, c.LABEL_EDGE_ID, c.ALL_EDGES_INDEX_FILE)
 
-    where_statement = " WHERE " + c.ALL_EDGES_INDEX_FILE + "." + c.LABEL_EDGE_ID + " IN (`" + '`, `'.join(edges_list) + "`)"
+    where_statement = " WHERE " + c.ALL_EDGES_INDEX_FILE + "." + c.LABEL_EDGE_ID + " IN ('" + "', '".join(edges_list) + "')"
     # group by edge_id to get list of notes
     statement = select_statement + " " + from_statement + where_statement +\
                 " GROUP BY " + c.ALL_EDGES_INDEX_FILE + "." + c.LABEL_EDGE_ID

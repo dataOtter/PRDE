@@ -1,2 +1,21 @@
 GIT name: dataOtter
 GIT password: 778cf0e08cb1b88aee1705992101988b243d752c
+
+On local:
+compile test
+git status
+git add files
+git commit -a 
+git push
+
+On VM:
+git pull
+cd PRDE/testproject
+
+prompt shoud look like: (testproject) user@DataOtter:~/PRDE/testproject$
+otherwise, while sitting in ~/PRDE/testproject do
+    source bin/activate
+	
+uwsgi --socket 0.0.0.0:5000 --protocol=http -w wsgi:app -b 32768
+
+!u will do the last command which began with u
