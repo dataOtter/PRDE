@@ -7,6 +7,8 @@ from csv_writer import write_to_csv as csv_zip
 import pickle
 import session_map as sm
 
+from pymemcache.client import base
+
 app = f.Flask(__name__)
 app.secret_key = "It's secret, duh"
 
