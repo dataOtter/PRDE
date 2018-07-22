@@ -1,0 +1,7 @@
+https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04
+
+mv testproject.service /etc/systemd/system/testproject.service
+mv testproject /etc/nginx/sites-available/testproject
+mv testproject.TEMPLATE /etc/nginx/sites-available/testproject.TEMPLATE
+
+ln -s /etc/nginx/sites-available/testproject /etc/nginx/sites-enabled

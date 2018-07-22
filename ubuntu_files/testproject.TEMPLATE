@@ -1,0 +1,21 @@
+server {
+    listen 80;
+    server_name IP_ADDRESS;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/user/PRDE/testproject/testproject.sock;
+    }
+
+    location /static {
+    	root /home/user/PRDE/testproject/;
+    }
+
+    location /templates {
+    	root /home/user/PRDE/testproject/;
+    }
+    
+    location /outputs {
+    	root /home/user/PRDE/testproject/;
+    }
+}
