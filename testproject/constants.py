@@ -1,7 +1,7 @@
 DB_NAME = 'puerto_rico'
 USER_NAME = 'maisha'
 PASSWORD = 'password123'
-HOST_IP = '192.168.1.15'
+HOST_IP = '192.168.1.10'
 
 GLOBAL_CNX_COUNT = -1
 GLOBAL_CNX = None
