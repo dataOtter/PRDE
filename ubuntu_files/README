@@ -1,7 +1,13 @@
+
+exit
+
 https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04
+
+ln -s /etc/nginx/sites-available/testproject /etc/nginx/sites-enabled
 
 mv testproject.service /etc/systemd/system/testproject.service
 mv testproject /etc/nginx/sites-available/testproject
 mv testproject.TEMPLATE /etc/nginx/sites-available/testproject.TEMPLATE
+mv nginx.conf /etc/nginx/nginx.conf
 
-ln -s /etc/nginx/sites-available/testproject /etc/nginx/sites-enabled
+
