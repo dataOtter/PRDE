@@ -93,7 +93,7 @@ def show_result():
         f.session['fs'] = pickle.dumps(fs)
     else:
         guid = f.session['fs']
-        fs = sm.update_FilterSystem(guid, fs, app)
+        sm.update_FilterSystem(guid, fs, app)
 
     for fltr in fs.get_active_filters():
         kind = fltr.get_kind()
