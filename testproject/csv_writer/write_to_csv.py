@@ -13,7 +13,7 @@ def make_zip_folder(phase_tbl_cols_dict: dict, pids_list):
     """Input: Dictionary of phase name to dictionary of table name to column label list.
     Output: Returns name of the zip folder containing all subjects data from the given columns of the given tables."""
     unique_id = str(uuid.uuid1())
-    full_path = c.DOWNLOAD_FILES_PATH + '\\' + unique_id
+    full_path = c.DOWNLOAD_FILES_PATH + '/' + unique_id
     try:
         os.mkdir(full_path)
     except OSError:
@@ -22,7 +22,7 @@ def make_zip_folder(phase_tbl_cols_dict: dict, pids_list):
     make_nodes_data_csv(phase_tbl_cols_dict, pids_list, full_path)
     make_edges_data_csv(phase_tbl_cols_dict, pids_list, full_path)
 
-    zipf = zipfile.ZipFile(full_path + '\\' + c.DOWNLOAD_ZIP_FOLDER_NAME, 'w')  # create zip-handle
+    zipf = zipfile.ZipFile(full_path + '/' + c.DOWNLOAD_ZIP_FOLDER_NAME, 'w')  # create zip-handle
     zip_up_files(zipf, full_path)  # zip up the files
     zipf.close()
     #return unique_id + '.zip'  # return the name of the zip folder
@@ -45,7 +45,7 @@ def zip_up_files(ziphandle, full_path):
 
 def remove_csvs(full_path):
     for file_name in c.DOWNLOAD_FILE_NAMES_LIST:
-        path_and_name = full_path + '\\' + file_name
+        path_and_name = full_path + '/' + file_name
         if os.path.exists(path_and_name):
             os.remove(path_and_name)
         else:
@@ -73,7 +73,7 @@ def write_list_to_csv(filename: str, data: list, full_path, is_list_of_lists=Tru
     """Input: List of data to be written to a csv; filename; full path to the file;
     if data is lists of strings be sure to change the flag.
     Output: Creates a csv of the given data, with each list being a row."""
-    filepath = full_path + '\\' + filename
+    filepath = full_path + '/' + filename
     w.create_empty_csv(filepath)
     with open(filepath, "a", newline="") as f:
         writer = csv.writer(f, quoting=csv.QUOTE_ALL, doublequote=True, delimiter=",")
